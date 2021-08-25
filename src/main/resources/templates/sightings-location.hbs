@@ -1,0 +1,39 @@
+{{#partial "navlinks"}}
+    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            View Animals
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="/animals/endangered">Endangered</a>
+            <a class="dropdown-item" href="/animals/not-endangered">Not Endangered</a>
+        </div>
+    </li>
+    <li class="nav-item"><a class="nav-link" href="/rangers">Our Rangers</a></li>
+    <li class="nav-item active"><a class="nav-link" href="/sightings">Sighting Locations</a></li>
+    <li class="nav-item"><a class="nav-link" href="/sighting/new">New Sighting</a></li>
+{{/partial}}
+
+{{#partial "preContent"}}
+    <div class="jumbotron jumbotrion-fluid sighting-jumbotron">
+        <div class="container">
+            <h1 class="display-3">Popular Sighting locations</h1>
+            <p class="lead"></p>
+        </div>
+    </div>
+{{/partial}}
+
+{{#partial "content"}}
+    {{#if sightings}}
+        <h2 class="text-center">These are all the locations</h2>
+        <ul class="list-group">
+        {{#each sightings}}
+            <li class="list-group-item"><a href="/sightings/{{locationofSighting}}/details">{{locationofSighting}}</a></li>
+        {{/each}}
+        </ul>
+    {{else}}
+        <h5 class="text-center">No Sightings have been established in any location</h5>
+    {{/if}}
+{{/partial}}
+
+{{> layout.hbs}}

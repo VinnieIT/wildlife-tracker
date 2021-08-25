@@ -1,0 +1,96 @@
+{{#partial "navlinks"}}
+    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            View Animals
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="/animals/endangered">Endangered</a>
+            <a class="dropdown-item" href="/animals/not-endangered">Not Endangered</a>
+        </div>
+    </li>
+    <li class="nav-item"><a class="nav-link" href="/rangers">Our Rangers</a></li>
+    <li class="nav-item"><a class="nav-link" href="/sightings">Sighting Locations</a></li>
+    <li class="nav-item active"><a class="nav-link" href="/sighting/new">New Sighting</a></li>
+{{/partial}}
+
+{{#partial "preContent"}}
+    <div class="jumbotron jumbotrion-fluid sighting-jumbotron">
+        <div class="container">
+            <h1 class="display-3">We Love.. We Conserve!</h1>
+            <p class="lead">Tell us about your sightings ...</p>
+        </div>
+    </div>
+{{/partial}}
+
+{{#partial "content"}}
+    <h3 class="text-center">Report a new sighting!</h3>
+    {{#if specificRanger}}
+        <form action="/rangers/{{specificRanger.id}}/sighting/new" method="post">
+            <div class="form-group">
+                <label for="rangerName">Ranger Name</label>
+                <input type="text" id="rangersName" name="rangersName" class="form-control" value="{{specificRanger.name}}" disabled>
+            </div>
+    {{else}}
+        <form action="/sighting/new" method="post">
+            <div class="form-group">
+                <label for="rangersName">Ranger Name</label>
+                <input type="text" id="rangersName" name="rangersName" class="form-control" required>
+            </div>
+    {{/if}}
+        <div class="form-group">
+            <label for="animalName">Animal Name</label>
+            {{#if sightings}}
+                <input type="text" id="nameOfAnimal" name="nameOfAnimal" class="form-control" list="prevAnimals" required>
+                <datalist id="prevAnimals">
+                    {{#each sightings}}
+                    <option value={{nameOfAnimal}}>
+                    {{/each}}
+                </datalist>
+            {{else}}
+                <input type="text" id="nameOfAnimal" name="nameOfAnimal" class="form-control" required>
+            {{/if}}
+        </div>
+        <div class="form-group">
+            <label for="ageOfAnimal">Approx age:</label>
+            <select name="ageOfAnimal" id="ageOfAnimal" class="form-control" required>
+                <option value="New born">0yr to 2yrs</option>
+                <option value="Baby">2yrs to 5yrs</option>
+                <option value="Young adult">5yrs and above</option>
+                <option value="Elderly">Elderly</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="animalHealthStatus">Animal Health Assessment</label>
+            <select name="animalHealthStatus" id="animalHealthStatus" class="form-control" required>
+                <option value="Healthy">Healthy</option>
+                <option value="Sick">Sick</option>
+                <option value="Malnourished">Malnourished</option>
+                <option value="Verge of death">Verge of death</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="animalsLocation">Location</label>
+            {{#if sightings}}
+                <input type="text" id="animalsLocation" name="animalsLocation" class="form-control" list="prevLocations" required>
+                <datalist id="prevLocations">
+                    {{#each sightings}}
+                        <option value={{locationofSighting}}>
+                    {{/each}}
+                </datalist>
+            {{else}}
+                <input type="text" id="animalsLocation" name="animalsLocation" class="form-control" required>
+            {{/if}}
+        </div>
+        <div class="form-group">
+            <label for="animalType">Animal Safety</label>
+            <select name="animalType" id="animalType" class="form-control" required>
+                <option value="Endangered">Endangered</option>
+                <option value="Not Endangered">Not Endangered</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-outline-info">Submit</button>
+    </form>
+{{/partial}}
+
+{{> layout.hbs}}

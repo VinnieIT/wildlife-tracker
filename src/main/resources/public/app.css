@@ -1,0 +1,9 @@
+.main-page-jumbotron{
+    background: url('/images/ip3.jpg');
+    background-position-y: center;
+    background-size: cover;
+    background-repeat: none;
+}
+.display-main{
+    color: white;
+}
