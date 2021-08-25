@@ -10,6 +10,7 @@
 
 {{#partial "content"}}
     {{#if sightings}}
+    <div class= "card ">
         <h2 class="text-center">These are all the locations</h2>
         <ul class="list-group">
         {{#each sightings}}
@@ -19,6 +20,7 @@
     {{else}}
         <h5 class="text-center">No Sightings have been established in any location</h5>
     {{/if}}
+    </div>
 {{/partial}}
 
 {{> layout.hbs}}
