@@ -4,14 +4,13 @@ import models.Rangers;
 import models.Sightings;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
-
 import java.sql.Timestamp;
 import java.util.*;
-
 import static spark.Spark.*;
 
 public class App {
     static int getHerokuAssignedPort() {
+//        System.out.println("Get port");
         ProcessBuilder processBuilder = new ProcessBuilder();
         if (processBuilder.environment().get("PORT") != null) {
             return Integer.parseInt(processBuilder.environment().get("PORT"));
@@ -23,33 +22,29 @@ public class App {
         staticFileLocation("/public");
 
 
-
         //get: Homepage
         get("/",(request, response) -> {
+//            System.out.println("Root page");
+
             Map<String, Object> model = new HashMap<>();
-            List<Sightings> allSightings = Sightings.all();
-
-
-//            model.put("sightings", allSightings);
-
-//
             List<Sightings> data = new ArrayList<>();
-
-
-            for (Sightings sight: allSightings){
-                String nameOfAnimal = sight.getnameOfAnimal();
-                String locationOfSighing = sight.getlocationofSighting();
-                Timestamp timestamp = sight.getTimestamp();
-                int rangerId = sight.getRangerid();
-                Sightings tempSighing = new Sightings(nameOfAnimal,locationOfSighing,rangerId);
-                data.add(tempSighing);
+            try{
+                List<Sightings> allSightings = Sightings.all();
+                if (!allSightings.isEmpty()) {
+                    for (Sightings sight : allSightings) {
+                        String nameOfAnimal = sight.getnameOfAnimal();
+                        String locationOfSighing = sight.getlocationofSighting();
+                        Timestamp timestamp = sight.getTimestamp();
+                        int rangerId = sight.getRangerid();
+                        Sightings tempSighing = new Sightings(nameOfAnimal, locationOfSighing, rangerId);
+                        data.add(tempSighing);
+                    }
+                }
+            } catch (Exception exception){
+                System.out.println(exception.toString());
             }
 
-            for (Sightings x: data)
-                System.out.println(x.toString());
-
             model.put("sightings", data);
-
             return new ModelAndView(model,"index.hbs");
         },new HandlebarsTemplateEngine());
 
